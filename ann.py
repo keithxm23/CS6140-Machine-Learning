@@ -5,6 +5,7 @@ class Perceptron():#TODO add compulsory vars as keyword args
     bias = None
     output = None
     w_vector = [] #weight vector
+    w_old = []
     error = None
     lrate = None
     
@@ -39,7 +40,9 @@ class Layer():
                 err_j += q.error*q.w_vector[i]
             error *= err_j
             p.error = error
+            print error
             
+            p.w_old = p.w_vector
             for w in xrange(p.w_vector):
                 p.w_vector[w] += p.lrate * p.error * below_layer[w].output
             
@@ -63,7 +66,7 @@ class Nnet():
             
         #Check if error has converged
         err = MSE(xvec,self.labels)
-        print err
+#        print err
         #TODO: check convergence
         
         #If not, Now Back propagate
@@ -73,9 +76,11 @@ class Nnet():
             index = self.layers[-1].ptrons.index(p)
             error *= (self.labels[index] - p.output)
             p.error = error
+            print error
             
+            p.w_old = p.w_vector
             for w in xrange(len(p.w_vector)):
-                p.w_vector[w] += p.lrate * p.error * self.layers[-2].ptrons[w].output
+                p.w_vector[w] = p.w_old[w] + p.lrate * p.error * self.layers[-2].ptrons[w].output
             
         for i in xrange(len(self.layers)-2, -1, -1): #looping from index of output_layer-1 to 0th layer
             if i > 0:#updating errors of hidden layer perceptrons
@@ -89,7 +94,9 @@ class Nnet():
                         err_j += q.error*q.w_vector[i]
                     error *= err_j
                     p.error = error
+                    print error
                     
+                    p.w_old = p.w_vector
                     for w in xrange(len(p.w_vector)):
-                        p.w_vector[w] += p.lrate * p.error * self.layers[0].x_vector[w]
+                        p.w_vector[w] = p.w_old[w] + p.lrate * p.error * self.layers[0].x_vector[w]
             
