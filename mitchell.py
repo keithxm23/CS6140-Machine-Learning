@@ -11,5 +11,10 @@ nnet.layers=[l1,l2]
 nnet.labels=[1]
 
 #print l1.feed_forward()
-nnet.begin()
+nnet.begin(0.1)
+for p in nnet.layers[0].ptrons:
+    print p.output
+print "----------------"
+for p in nnet.layers[1].ptrons:
+    print p.output
 pass

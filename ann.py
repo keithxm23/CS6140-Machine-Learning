@@ -8,7 +8,7 @@ class Perceptron():#TODO add compulsory vars as keyword args
     w_vector = [] #weight vector
     w_old = []
     error = None
-    lrate = 0.9#None TODO randomize this
+    lrate = 0.05#None TODO randomize this
     
     def weighted_sum(self, x_vector):
         wsum = 0
@@ -32,13 +32,13 @@ class Layer():
             p.bias = b
             if below_layer == None:
                 if w_vector == None:
-                    p.w_vector = [rand(-1,1) for r in xrange(len(x_vector))]
+                    p.w_vector = [rand(-0.05,0.05) for r in xrange(len(x_vector))]
                 else:
                     p.w_vector = w_vector[i]
                 p.w_old = p.w_vector
             else:
                 if w_vector == None:
-                    p.w_vector = [rand(-1,1) for r in xrange(len(x_vector))]
+                    p.w_vector = [rand(-0.05,0.05) for r in xrange(len(below_layer.ptrons))]
                 else:
                     p.w_vector = w_vector[i]
                 p.w_old = p.w_vector
@@ -78,13 +78,14 @@ class Nnet():
     layers = []
     labels = []
     
-    def begin(self):
+    def begin(self, thresh):
         prev_error = 0
         curr_error = float("inf")
-        thresh = 0.1
+        run_number = 1
         while(not is_converged(prev_error, curr_error, thresh)):
 
             #Feed forward
+            z=1
             for i in xrange(len(self.layers)):
                 xvec = self.layers[i].feed_forward()
                 try:
@@ -95,10 +96,11 @@ class Nnet():
             #Check if error has converged
             prev_error = curr_error
             curr_error = MSE(xvec,self.labels)
-            print curr_error
-            #TODO: check convergence
+            print "Run: %s\t Error: %s" % (run_number, curr_error)
+            run_number+=1
             
             #If not, Now Back propagate
+            pass
             for p in self.layers[-1].ptrons: #updating errors of output layer perceptrons
                 error = p.output
                 error *= (1 - p.output)
@@ -118,12 +120,14 @@ class Nnet():
                 if i > 0:#updating errors of hidden layer perceptrons
                     self.layers[i].back_propagate(self.layers[i+1], self.layers[i-1])
                 else:#updating error for (i=)0-th layer (last hidden layer)
-                    for p in self.layers[0].ptrons:
+                    for j, p in enumerate(self.layers[0].ptrons):
                         error = p.output
                         error *= (1 - p.output)
                         err_j = 0
-                        for i, q in enumerate(self.layers[1].ptrons):
-                            err_j += q.error*q.w_vector[i]
+                        for q in self.layers[1].ptrons:
+                            #looping over above layer's perceptrons
+                            
+                            err_j += q.error*q.w_vector[j]#problematic
                         error *= err_j
                         p.error = error
 #                        print error
