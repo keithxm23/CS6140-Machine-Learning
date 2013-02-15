@@ -1,25 +1,36 @@
 from math import exp
 
 class Perceptron():
-    
     bias = None
-    x_vector = [] #input vector
-    w_vector = [] #weight vector
     output = None
+    w_vector = [] #weight vector
     
-    def weighted_sum(self):
+    def weighted_sum(self, x_vector):
         wsum = 0
-        for x, w in zip(self.x_vector, self.w_vector):
+        for x, w in zip(x_vector, self.w_vector):
             wsum += w*x
         wsum+= self.bias
         return wsum
     
-    def sigmoid(self): #activation function
-        return 1/(1+exp(self.weighted_sum()*-1))
+    def sigmoid(self, x_vector): #activation function
+        return 1/(1+exp(self.weighted_sum(x_vector)*-1))
 
-p = Perceptron()
-p.x_vector = [-3,1]
-p.w_vector = [1,1]
-p.bias = 1
-print p.sigmoid()
+class Layer():
+    ptrons = []
+    x_vector = [] #input vector
     
+    def feed_forward(self):
+        xvec = []
+        for p in self.ptrons:
+            xvec.append(p.sigmoid(self.x_vector))
+        return xvec
+    
+    def back_propagate(self):
+        pass
+    
+class Nnet():
+    layers = []
+    
+    def begin(self):
+        for l in self.layers:
+            xvec = l.feed_forward()
