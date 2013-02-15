@@ -4,17 +4,17 @@ from ann import *
 p1 = Perceptron()
 p1.w_vector = [1,1]
 p1.bias = 1
-p1.lrate = 1.0
+p1.lrate = 0.9
 
 p2 = Perceptron()
 p2.w_vector = [2,2]
 p2.bias = 2
-p2.lrate = 1.0
+p2.lrate = 0.9
 
 p3 = Perceptron()
 p3.w_vector = [3,3]
 p3.bias = 3
-p3.lrate = 1.0
+p3.lrate = 0.9
 
 #Defining layers
 l1 = Layer()
