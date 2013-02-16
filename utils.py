@@ -7,7 +7,7 @@ def MSE(predictions, labels):
     return mse
 
 def is_converged(prev_error_arr, current_error_arr, thresh):
-    return ((sum(prev_error_arr) - sum(current_error_arr)) <= thresh)
+    return (abs(sum(prev_error_arr) - sum(current_error_arr)) <= thresh)
 
 def ABSE(predictions, labels):#absoulte error
     err = 0

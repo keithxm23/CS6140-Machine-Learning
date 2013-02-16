@@ -22,13 +22,7 @@ nnet.labels=inputs_and_labels
 #print l1.feed_forward()
 nnet.begin(0.000001)#supply threshold
 
-#for p in nnet.layers[0].ptrons:
-#    print p.output
-#print "----------------"
-#for p in nnet.layers[1].ptrons:
-#    print p.output
-
-#Feed input data point number 0
+#Making predictuins using trained Nnet
 for input_number in xrange(8):   
 #    input_number = 0
     for i in xrange(len(nnet.layers)):
@@ -36,8 +30,7 @@ for input_number in xrange(8):
         try:
             nnet.layers[i+1].x_vector[input_number] = xvec
         except IndexError:
-            print xvec
+            print [round(x) for x in xvec]
             break #reached output layer
 
-    
 pass
