@@ -6,5 +6,5 @@ def MSE(predictions, labels):
     mse /= len(labels)
     return mse
 
-def is_converged(prev_error, current_error, thresh):
-    return (abs(prev_error - current_error) <= thresh)
+def is_converged(prev_error_arr, current_error_arr, thresh):
+    return (abs(sum(prev_error_arr) - sum(current_error_arr)) <= thresh)
