@@ -14,7 +14,7 @@ class Perceptron():#TODO add compulsory vars as keyword args
         wsum = 0
         for x, w in zip(x_vector, self.w_vector):
             wsum += w*x
-        wsum+= self.bias
+        #wsum+= self.bias
         return wsum
     
     def sigmoid(self, x_vector): #activation function
@@ -73,7 +73,7 @@ class Layer():
             for w in xrange(p.w_vector):
                 p.w_vector[w] += p.lrate * p.error * below_layer[w].output
             
-            p.bias += p.bias * p.lrate * p.error * 1
+            #p.bias += p.bias * p.lrate * p.error * 1
 
 
 class Nnet():
@@ -118,7 +118,7 @@ class Nnet():
                     for w in xrange(len(p.w_vector)):
                         p.w_vector[w] = p.w_old[w] + p.lrate * p.error * self.layers[-2].ptrons[w].output
                         
-                    p.bias += p.bias * p.lrate * p.error * 1
+                    #p.bias += p.bias * p.lrate * p.error * 1
                     
                     
                 for i in xrange(len(self.layers)-2, -1, -1): #looping from index of output_layer-1 to 0th layer
@@ -141,5 +141,5 @@ class Nnet():
                             for w in xrange(len(p.w_vector)):
                                 p.w_vector[w] = p.w_old[w] + p.lrate * p.error * self.layers[0].x_vector[input_index][w]
                                 
-                            p.bias += p.bias * p.lrate * p.error * 1
+                            #p.bias += p.bias * p.lrate * p.error * 1
             
