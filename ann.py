@@ -1,5 +1,5 @@
 from math import exp
-from utils import MSE, is_converged
+from utils import MSE, is_converged, ABSE
 from random import uniform as rand
 
 class Perceptron():#TODO add compulsory vars as keyword args
@@ -47,7 +47,7 @@ class Layer():
         if x_vector != None:
             self.x_vector = x_vector
         else:
-            self.x_vector = [[] for r in xrange(8)]
+            self.x_vector = [[] for r in xrange(8)] #FIXME: pull number of inputs from Nnet()
     
     
     
@@ -103,7 +103,8 @@ class Nnet():
                 prev_error_arr[input_index] = curr_error_arr[input_index]
                 curr_error_arr[input_index] = MSE(xvec,self.labels[input_index])
                 
-                #If not, Now Back propagate
+                
+                #Now Back propagate
                 pass
                 for p in self.layers[-1].ptrons: #updating errors of output layer perceptrons
                     error = p.output

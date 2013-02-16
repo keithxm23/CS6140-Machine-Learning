@@ -29,13 +29,15 @@ nnet.begin(0.000001)#supply threshold
 #    print p.output
 
 #Feed input data point number 0
-input_number = 0
-for i in xrange(len(nnet.layers)):
-    xvec = nnet.layers[i].feed_forward(input_number)
-    try:
-        nnet.layers[i+1].x_vector[input_number] = xvec
-    except IndexError:
-        print xvec
-        break #reached output layer
+for input_number in xrange(8):   
+#    input_number = 0
+    for i in xrange(len(nnet.layers)):
+        xvec = nnet.layers[i].feed_forward(input_number)
+        try:
+            nnet.layers[i+1].x_vector[input_number] = xvec
+        except IndexError:
+            print xvec
+            break #reached output layer
+
     
 pass
